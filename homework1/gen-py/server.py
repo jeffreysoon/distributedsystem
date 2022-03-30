@@ -14,7 +14,8 @@ class UsersService(users_service.UsersServicer):
         metadata = dict(context.invocation_metadata())
         print(metadata)
         user = users_messages.User(username=request.username, user_id=request.user_id)
-        self.users.append(user)
+        if user not in self.users:
+            self.users.append(user)
         return users_messages.CreateUserResult(user=user)
 
     def GetUsers(self, request, context):
